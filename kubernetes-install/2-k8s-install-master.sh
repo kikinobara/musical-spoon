@@ -10,7 +10,7 @@ MASTER1IP="192.168.15.190"
 WORKER1IP="192.168.15.191"
 WORKER2IP="192.168.15.192"
 NETWORKTYPE="192.168.15.0/24"
-POD_NETWORK_CIDR="192.168.0.0/16"
+POD_NETWORK_CIDR="172.16.0.0/16"
 
 # Main user of the server (will receive docker permissions and others)
 MAINUSER="rsantos"
@@ -23,7 +23,7 @@ echo -e "\n🔹 Iniciando Control Plane (rodar APENAS no master-1)\n"
 sudo kubeadm init \
   --apiserver-advertise-address=${MASTER1IP} \
   --pod-network-cidr=${POD_NETWORK_CIDR} \
-  --cri-socket=unix:///run/cri-dockerd.sock
+  --cri-socket=unix:///var/run/cri-dockerd.sock
 
 echo -e "\n🔹 Configurando kubeconfig para o usuário ${MAINUSER}..."
 mkdir -p $HOME/.kube
