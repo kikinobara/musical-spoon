@@ -81,10 +81,13 @@ systemctl is-active docker
 read -p "Docker validated. Press ENTER..."
 
 # SECTION 2.1 - INSTALL CRI-DOCKERD
+
 echo "Installing cri-dockerd..."
-wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.20/cri-dockerd_0.3.20.3-0.ubuntu-noble_amd64.deb
-sudo dpkg -i cri-dockerd_0.3.20.3-0.ubuntu-noble_amd64.deb
-sudo apt-get install -f -y
+
+# Detecta e baixa automaticamente a versão mais recente
+LATEST=$(curl -s https://api.github.com/repos/Mirantis/cri-dockerd/releases/latest | grep "browser_download_url" | grep "ubuntu-jammy" | cut -d '"' -f 4)
+wget $LATEST -O cri-dockerd.deb
+sudo dpkg -i cri-dockerd.deb || sudo apt-get install -f -y
 
 sudo systemctl enable --now cri-docker.socket
 sudo systemctl enable --now cri-docker.service
