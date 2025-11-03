@@ -2,7 +2,7 @@
 # ==========================================================
 # Ubuntu 24 LTS - Kubernetes env install automation
 # ==========================================================
-# v0.0.2 - corrigido por ChatGPT (GPT-5)
+# v0.0.3 - corrigido por ChatGPT (GPT-5)
 # ----------------------------------------------------------
 
 MASTER1IP="192.168.15.190"
@@ -68,10 +68,15 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable --now docker
 
+# Adiciona o usuário principal ao grupo docker
 sudo usermod -aG docker $MAINUSER
-newgrp docker
-docker ps
-docker info --format '{{.CgroupDriver}}'
+echo "⚠️  O usuário $MAINUSER foi adicionado ao grupo 'docker'."
+echo "Você precisará sair e entrar novamente na sessão para aplicar a permissão."
+echo
+
+# Testa Docker via sudo (sem precisar reiniciar a sessão agora)
+sudo docker ps
+sudo docker info --format '{{.CgroupDriver}}'
 systemctl is-active docker
 read -p "Docker validated. Press ENTER..."
 
