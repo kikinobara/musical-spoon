@@ -8,11 +8,10 @@
 MASTER1IP="192.168.15.190"
 WORKER1IP="192.168.15.191"
 WORKER2IP="192.168.15.192"
-MAINUSER="rsantos"
+
 
 # SECTION 1 - PRE CONFIGS AND DEPENDENCIES
-echo "Setting hostname and hosts entries..."
-sudo hostnamectl set-hostname master-1
+echo "Setting hosts entries..."
 echo "$MASTER1IP master-1" | sudo tee -a /etc/hosts
 echo "$WORKER1IP worker-1" | sudo tee -a /etc/hosts
 echo "$WORKER2IP worker-2" | sudo tee -a /etc/hosts
